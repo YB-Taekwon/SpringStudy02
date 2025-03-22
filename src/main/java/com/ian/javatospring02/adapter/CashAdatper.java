@@ -1,9 +1,15 @@
 package com.ian.javatospring02.adapter;
 
+import com.ian.javatospring02.type.PayMethodType;
 import com.ian.javatospring02.type.UseCancleResult;
 import com.ian.javatospring02.type.UseResult;
 
 public class CashAdatper implements PaymentAdapter {
+    @Override
+    public PayMethodType getPayMethodType() {
+        return PayMethodType.CASH;
+    }
+
     // 사용
     public UseResult use(Integer amount) {
         // 결제 금액이 100만원 초과일 경우, 사용 불가

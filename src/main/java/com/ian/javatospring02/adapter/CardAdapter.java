@@ -1,9 +1,14 @@
 package com.ian.javatospring02.adapter;
 
+import com.ian.javatospring02.type.PayMethodType;
 import com.ian.javatospring02.type.UseCancleResult;
 import com.ian.javatospring02.type.UseResult;
 
 public class CardAdapter implements PaymentAdapter {
+    @Override
+    public PayMethodType getPayMethodType() {
+        return PayMethodType.CARD;
+    }
 
     // 인증
     public void authenticate() {
