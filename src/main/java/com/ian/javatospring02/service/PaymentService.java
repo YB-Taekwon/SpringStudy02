@@ -3,6 +3,9 @@ package com.ian.javatospring02.service;
 import com.ian.javatospring02.adapter.CardAdapter;
 import com.ian.javatospring02.adapter.CashAdatper;
 import com.ian.javatospring02.adapter.PaymentAdapter;
+import com.ian.javatospring02.discount.ConvenienceDiscountPolicy;
+import com.ian.javatospring02.discount.DiscountPolicy;
+import com.ian.javatospring02.discount.PayMethodDiscountPolicy;
 import com.ian.javatospring02.dto.PayCancleRequest;
 import com.ian.javatospring02.dto.PayCancleResponse;
 import com.ian.javatospring02.type.*;
@@ -12,6 +15,8 @@ import com.ian.javatospring02.dto.PayResponse;
 // 편결이 애플리케이션
 public class PaymentService {
     private static PaymentAdapter paymentAdapter;
+//    private static final DiscountPolicy discountPolicy = new PayMethodDiscountPolicy();
+    private static final DiscountPolicy discountPolicy = new ConvenienceDiscountPolicy();
 
     // 결제
     public PayResponse pay(PayRequest payRequest) {
@@ -20,14 +25,15 @@ public class PaymentService {
         else
             paymentAdapter = new CardAdapter();
 
-        UseResult useResult = paymentAdapter.use(payRequest.getPayAmount());
+        Integer discountAmount = discountPolicy.discount(payRequest);
+        UseResult useResult = paymentAdapter.use(discountAmount);
 
         // Fail Fast
         if (useResult == UseResult.USE_FAILED)
             return new PayResponse(PayResult.PAY_FAILED, 0);
 
         // Success Case(Only One)
-        return new PayResponse(PayResult.PAY_SUCCESS, payRequest.getPayAmount());
+        return new PayResponse(PayResult.PAY_SUCCESS, discountAmount);
     }
 
     // 결제 취소
