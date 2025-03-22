@@ -6,6 +6,7 @@ import com.ian.javatospring02.type.ConvenienceType;
 import com.ian.javatospring02.dto.PayRequest;
 import com.ian.javatospring02.dto.PayResponse;
 import com.ian.javatospring02.type.PayCancleResult;
+import com.ian.javatospring02.type.PayMethodType;
 import com.ian.javatospring02.type.PayResult;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ class PaymentServiceTest {
     @Test
     void pay_success() {
         // given
-        PayRequest payRequest = new PayRequest(ConvenienceType.G25, 5000);
+        PayRequest payRequest = new PayRequest(ConvenienceType.G25, 5000, PayMethodType.CASH);
 
         // when
         PayResponse payResponse = paymentService.pay(payRequest);
@@ -30,7 +31,7 @@ class PaymentServiceTest {
     @Test
     void pay_fail() {
         // given
-        PayRequest payRequest = new PayRequest(ConvenienceType.G25, 100_0001);
+        PayRequest payRequest = new PayRequest(ConvenienceType.G25, 100_0001, PayMethodType.CARD);
 
         // when
         PayResponse payResponse = paymentService.pay(payRequest);
@@ -43,7 +44,7 @@ class PaymentServiceTest {
     @Test
     void pay_cancle_success() {
         // given
-        PayCancleRequest payCancleRequest = new PayCancleRequest(ConvenienceType.G25, 5000);
+        PayCancleRequest payCancleRequest = new PayCancleRequest(ConvenienceType.G25, 5000, PayMethodType.CARD);
 
         // when
         PayCancleResponse payCancleResponse = paymentService.payCancle(payCancleRequest);
@@ -56,7 +57,7 @@ class PaymentServiceTest {
     @Test
     void pay_cancle_fail() {
         // given
-        PayCancleRequest payCancleRequest = new PayCancleRequest(ConvenienceType.G25, 50);
+        PayCancleRequest payCancleRequest = new PayCancleRequest(ConvenienceType.G25, 50, PayMethodType.CASH);
 
         // when
         PayCancleResponse payCancleResponse = paymentService.payCancle(payCancleRequest);

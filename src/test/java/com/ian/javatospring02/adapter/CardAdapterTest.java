@@ -6,17 +6,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CashAdatperTest {
-    CashAdatper cashAdatper = new CashAdatper();
+class CardAdapterTest {
+    CardAdapter cardAdapter = new CardAdapter();
 
     @Test
     void use_success() {
         // given
         Integer amount = 1000;
-
         // when
-        UseResult useResult = cashAdatper.use(amount);
-
+        UseResult useResult = cardAdapter.use(amount);
         // then
         assertEquals(UseResult.USE_SUCCESS, useResult);
     }
@@ -27,7 +25,7 @@ class CashAdatperTest {
         Integer amount = 100_0001;
 
         // when
-        UseResult useResult = cashAdatper.use(amount);
+        UseResult useResult = cardAdapter.use(amount);
 
         // then
         assertEquals(UseResult.USE_FAILED, useResult);
@@ -39,7 +37,7 @@ class CashAdatperTest {
         Integer amount = 1000;
 
         // when
-        UseCancleResult useCancleResult = cashAdatper.useCancle(amount);
+        UseCancleResult useCancleResult = cardAdapter.useCancle(amount);
 
         // then
         assertEquals(UseCancleResult.USE_CANCLE_SUCCESS, useCancleResult);
@@ -51,7 +49,7 @@ class CashAdatperTest {
         Integer amount = 50;
 
         // when
-        UseCancleResult useCancleResult = cashAdatper.useCancle(amount);
+        UseCancleResult useCancleResult = cardAdapter.useCancle(amount);
 
         // then
         assertEquals(UseCancleResult.USE_CANCLE_FAILED, useCancleResult);
